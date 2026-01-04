@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Users, UsersSchema } from './schemas/user.schhema';
+import { UsersController } from './controllers/users.controller';
 
 @Module({
   imports: [
@@ -11,7 +12,7 @@ import { Users, UsersSchema } from './schemas/user.schhema';
     }),
     MongooseModule.forFeature([{ name: Users.name, schema: UsersSchema }]),
   ],
-  controllers: [AppController],
+  controllers: [AppController, UsersController],
   providers: [AppService],
 })
 export class AppModule {}
