@@ -8,7 +8,26 @@ import { CreateEventDto } from 'src/types/event.dto';
 export class EventService {
   constructor(@InjectModel(Events.name) private eventModel: Model<Events>) {}
 
-  create(_id: Types.ObjectId, body: CreateEventDto): Promise<any> {
-    return this.eventModel.create({ company: _id, ...body });
+  findOneById(
+    _companyId: Types.ObjectId,
+    _eventId: Types.ObjectId,
+  ): Promise<any> {
+    return this.eventModel.findOne({ _id: _eventId, company: _companyId });
+  }
+
+  findAllById(_companyId: Types.ObjectId): Promise<any> {
+    return this.eventModel.find({ company: _companyId });
+  }
+
+  create(_companyId: Types.ObjectId, body: CreateEventDto): Promise<any> {
+    return this.eventModel.create({ company: _companyId, ...body });
+  }
+
+  update(
+    _companyId: Types.ObjectId,
+    _id: Types.ObjectId,
+    body: CreateEventDto,
+  ): Promise<any> {
+    return this.eventModel.findOneAndUpdate({ _id, company: _companyId }, body);
   }
 }
