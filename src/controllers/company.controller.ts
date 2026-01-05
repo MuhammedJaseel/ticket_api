@@ -4,13 +4,11 @@ import { CompanyService } from 'src/services/company.services';
 import { LoginCompanyDto, VerifyCompanyDto } from 'src/types/auth.dto';
 
 @Controller('api/auth')
-export class AuthController {
+export class CompinyController {
   constructor(
     private jwt: JwtService,
     private companyService: CompanyService,
   ) {}
-
-  COMPANY_SECRET = 'companysecret';
 
   @Post('company/login')
   companyLogin(@Body() body: LoginCompanyDto) {
@@ -30,15 +28,15 @@ export class AuthController {
       throw new UnauthorizedException('Invalid token or OTP');
     }
 
-    let registerd = true;
+    const token = this.jwt.sign(
+      { email: decoded.email },
+      { secret: 'companysecret' },
+    );
     let data = await this.companyService.findByEmail(decoded.email);
     if (!data) {
       data = this.companyService.createBasic({ email: decoded.email });
-      registerd = false;
+      return { token, registerd: false };
     }
-
-    const token = this.jwt.sign({ id: data._id }, { secret: 'companysecret' });
-
-    return { token, registerd };
+    return { token, registerd: true };
   }
 }

@@ -1,4 +1,10 @@
-import { Module } from '@nestjs/common';
+import {
+  Injectable,
+  MiddlewareConsumer,
+  Module,
+  NestMiddleware,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -7,6 +13,7 @@ import { UsersController } from './controllers/users.controller';
 import { AuthController } from './controllers/auth.controller';
 import { JwtService } from '@nestjs/jwt';
 import { CompanyService } from './services/company.services';
+import { NextFunction, Request } from 'express';
 
 @Module({
   imports: [
@@ -20,4 +27,25 @@ import { CompanyService } from './services/company.services';
   controllers: [AppController, AuthController, UsersController],
   providers: [AppService, JwtService, CompanyService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(CompanyMiddleware).forRoutes('/api/company*');
+  }
+}
+
+@Injectable()
+export class CompanyMiddleware implements NestMiddleware {
+  constructor(private jwt: JwtService) {}
+
+  use(req: Request, res: Response, next: NextFunction) {
+    const secret = 'companysecret';
+    let decoded: any = {};
+    try {
+      decoded = this.jwt.verify(req.headers.authorization, { secret });
+      req['reqId'] = decoded.id;
+    } catch (error) {
+      throw new UnauthorizedException('Anuthorized access, invalid token');
+    }
+    next();
+  }
+}
