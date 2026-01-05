@@ -9,11 +9,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Compaines, CompainesSchema } from './schemas/compaines.schema';
-import { UsersController } from './controllers/user.controller';
-import { AuthController } from './controllers/auth.controller';
+import { UserController } from './controllers/user.controller';
 import { JwtService } from '@nestjs/jwt';
 import { CompanyService } from './services/company.services';
 import { NextFunction, Request } from 'express';
+import { CompanyController } from './controllers/company.controller';
 
 @Module({
   imports: [
@@ -24,7 +24,7 @@ import { NextFunction, Request } from 'express';
       { name: Compaines.name, schema: CompainesSchema },
     ]),
   ],
-  controllers: [AppController, AuthController, UsersController],
+  controllers: [AppController, CompanyController, UserController],
   providers: [AppService, JwtService, CompanyService],
 })
 export class AppModule {

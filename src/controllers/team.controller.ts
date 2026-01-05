@@ -4,8 +4,8 @@ import { Types } from 'mongoose';
 import { CompanyService } from 'src/services/company.services';
 import { RegisterCompanyDto } from 'src/types/company.dto';
 
-@Controller('api/user')
-export class UserController {
+@Controller('api/team')
+export class TeamController {
   constructor(private companyService: CompanyService) {}
 
   @Get()

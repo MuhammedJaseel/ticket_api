@@ -5,7 +5,7 @@ import { CompanyService } from 'src/services/company.services';
 import { RegisterCompanyDto } from 'src/types/company.dto';
 
 @Controller('api/company')
-export class CompinyController {
+export class CompanyController {
   constructor(private companyService: CompanyService) {}
 
   @Get()
