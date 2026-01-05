@@ -30,15 +30,11 @@ export class AuthController {
       throw new UnauthorizedException('Invalid token or OTP');
     }
 
-    let registerd = true;
     let data = await this.companyService.findByEmail(decoded.email);
-    if (!data) {
-      data = this.companyService.createBasic({ email: decoded.email });
-      registerd = false;
-    }
+    if (!data) data = this.companyService.createBasic({ email: decoded.email });
 
     const token = this.jwt.sign({ id: data._id }, { secret: 'companysecret' });
 
-    return { token, registerd };
+    return { token, registerd: data.registerd };
   }
 }

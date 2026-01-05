@@ -30,11 +30,29 @@ import { NextFunction, Request } from 'express';
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(CompanyMiddleware).forRoutes('/api/company*');
+    consumer.apply(UsersMiddleware).forRoutes('/api/users*');
   }
 }
 
 @Injectable()
 export class CompanyMiddleware implements NestMiddleware {
+  constructor(private jwt: JwtService) {}
+
+  use(req: Request, res: Response, next: NextFunction) {
+    const secret = 'companysecret';
+    let decoded: any = {};
+    try {
+      decoded = this.jwt.verify(req.headers.authorization, { secret });
+      req['reqId'] = decoded.id;
+    } catch (error) {
+      throw new UnauthorizedException('Anuthorized access, invalid token');
+    }
+    next();
+  }
+}
+
+@Injectable()
+export class UsersMiddleware implements NestMiddleware {
   constructor(private jwt: JwtService) {}
 
   use(req: Request, res: Response, next: NextFunction) {
