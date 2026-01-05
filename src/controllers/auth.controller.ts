@@ -27,7 +27,7 @@ export class AuthController {
     try {
       decoded = this.jwt.verify(body.token, { secret });
     } catch (error) {
-      throw new UnauthorizedException('Invalid token or OTP');
+      throw new UnauthorizedException('Invalid OTP');
     }
 
     let data = await this.companyService.findByEmail(decoded.email);
