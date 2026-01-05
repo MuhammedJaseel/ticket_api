@@ -14,6 +14,10 @@ export class CompanyService {
     return this.companyModel.findOne({ email });
   }
 
+  findById(_id: Types.ObjectId): Promise<any> {
+    return this.companyModel.findById(_id);
+  }
+
   createBasic(body: any): Promise<any> {
     return this.companyModel.create({ registerd: false, ...body });
   }

@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import { Types } from 'mongoose';
@@ -11,6 +11,12 @@ export class CompinyController {
     private jwt: JwtService,
     private companyService: CompanyService,
   ) {}
+
+  @Get()
+  getCompany(@Req() req: Request, @Body() body: RegisterCompanyDto) {
+    const _id = new Types.ObjectId(req['reqId']);
+    return this.companyService.findById(_id);
+  }
 
   @Post('register')
   companyLogin(@Req() req: Request, @Body() body: RegisterCompanyDto) {

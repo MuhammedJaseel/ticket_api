@@ -1,6 +1,7 @@
 import {
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsString,
   MaxLength,
   MinLength,
@@ -28,8 +29,7 @@ export class RegisterCompanyDto {
   @IsString()
   companyLocation: string;
 
-  @IsNotEmpty({ message: 'Company location is required' })
-  @MaxLength(100, { message: 'Company location too long' })
+  @IsOptional({ message: 'Company location is required' })
   @IsNumber()
   orgSize: number;
 }
