@@ -18,6 +18,7 @@ import { EventController } from './controllers/event.controller';
 import { TeamController } from './controllers/team.controller';
 import { AuthController } from './controllers/auth.controller';
 import { EventService } from './services/event.services';
+import { Events, EventsSchema } from './schemas/events.schema';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { EventService } from './services/event.services';
     }),
     MongooseModule.forFeature([
       { name: Compaines.name, schema: CompainesSchema },
+      { name: Events.name, schema: EventsSchema },
     ]),
   ],
   controllers: [
