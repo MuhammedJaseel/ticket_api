@@ -16,6 +16,7 @@ import { NextFunction, Request } from 'express';
 import { CompanyController } from './controllers/company.controller';
 import { EventController } from './controllers/event.controller';
 import { TeamController } from './controllers/team.controller';
+import { AuthController } from './controllers/auth.controller';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { TeamController } from './controllers/team.controller';
   ],
   controllers: [
     AppController,
+    AuthController,
     CompanyController,
     UserController,
     EventController,
@@ -67,7 +69,6 @@ export class UsersMiddleware implements NestMiddleware {
     const secret = 'companysecret';
     let decoded: any = {};
     try {
-      console.log(req.headers.authorization);
       decoded = this.jwt.verify(req.headers.authorization, { secret });
       req['reqId'] = decoded.id;
     } catch (error) {
