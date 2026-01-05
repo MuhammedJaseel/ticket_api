@@ -20,7 +20,7 @@ export class Compaines {
   @Prop({ type: String, required: true })
   companyLocation: string;
 
-  @Prop({ type: Number, required: true })
+  @Prop({ type: Number })
   orgSize: number;
 }
 
