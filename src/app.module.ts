@@ -14,6 +14,8 @@ import { JwtService } from '@nestjs/jwt';
 import { CompanyService } from './services/company.services';
 import { NextFunction, Request } from 'express';
 import { CompanyController } from './controllers/company.controller';
+import { EventController } from './controllers/event.controller';
+import { TeamController } from './controllers/team.controller';
 
 @Module({
   imports: [
@@ -24,7 +26,13 @@ import { CompanyController } from './controllers/company.controller';
       { name: Compaines.name, schema: CompainesSchema },
     ]),
   ],
-  controllers: [AppController, CompanyController, UserController],
+  controllers: [
+    AppController,
+    CompanyController,
+    UserController,
+    EventController,
+    TeamController,
+  ],
   providers: [AppService, JwtService, CompanyService],
 })
 export class AppModule {
@@ -59,6 +67,7 @@ export class UsersMiddleware implements NestMiddleware {
     const secret = 'companysecret';
     let decoded: any = {};
     try {
+      console.log(req.headers.authorization);
       decoded = this.jwt.verify(req.headers.authorization, { secret });
       req['reqId'] = decoded.id;
     } catch (error) {
