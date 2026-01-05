@@ -1,42 +1,20 @@
-import { Body, Controller, Post, UnauthorizedException } from '@nestjs/common';
+import { Body, Controller, Post, Req } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { Request } from 'express';
+import { Types } from 'mongoose';
 import { CompanyService } from 'src/services/company.services';
-import { LoginCompanyDto, VerifyCompanyDto } from 'src/types/auth.dto';
+import { RegisterCompanyDto } from 'src/types/company.dto';
 
-@Controller('api/auth')
+@Controller('api/company')
 export class CompinyController {
   constructor(
     private jwt: JwtService,
     private companyService: CompanyService,
   ) {}
 
-  @Post('company/login')
-  companyLogin(@Body() body: LoginCompanyDto) {
-    const otp = '123456';
-    const secret = 'companysecret' + otp;
-    const token = this.jwt.sign({ email: body.email }, { secret });
-    return { token };
-  }
-
-  @Post('company/verify')
-  async companyVerify(@Body() body: VerifyCompanyDto) {
-    const secret = 'companysecret' + body.otp;
-    let decoded: any = {};
-    try {
-      decoded = this.jwt.verify(body.token, { secret });
-    } catch (error) {
-      throw new UnauthorizedException('Invalid token or OTP');
-    }
-
-    const token = this.jwt.sign(
-      { email: decoded.email },
-      { secret: 'companysecret' },
-    );
-    let data = await this.companyService.findByEmail(decoded.email);
-    if (!data) {
-      data = this.companyService.createBasic({ email: decoded.email });
-      return { token, registerd: false };
-    }
-    return { token, registerd: true };
+  @Post('register')
+  companyLogin(@Req() req: Request, @Body() body: RegisterCompanyDto) {
+    const _id = new Types.ObjectId(req['reqId']);
+    return this.companyService.register(_id, body);
   }
 }

@@ -7,6 +7,21 @@ export class Compaines {
 
   @Prop({ type: Boolean, required: true, default: false })
   registerd: boolean;
+
+  @Prop({ type: String, required: true })
+  ownerName: string;
+
+  @Prop({ type: String, required: true })
+  ownerPhone: string;
+
+  @Prop({ type: String, required: true })
+  companyName: string;
+
+  @Prop({ type: String, required: true })
+  companyLocation: string;
+
+  @Prop({ type: Number, required: true })
+  orgSize: number;
 }
 
 export const CompainesSchema = SchemaFactory.createForClass(Compaines);
