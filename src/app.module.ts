@@ -17,6 +17,7 @@ import { CompanyController } from './controllers/company.controller';
 import { EventController } from './controllers/event.controller';
 import { TeamController } from './controllers/team.controller';
 import { AuthController } from './controllers/auth.controller';
+import { EventService } from './services/event.services';
 
 @Module({
   imports: [
@@ -35,7 +36,7 @@ import { AuthController } from './controllers/auth.controller';
     EventController,
     TeamController,
   ],
-  providers: [AppService, JwtService, CompanyService],
+  providers: [AppService, JwtService, CompanyService, EventService],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
