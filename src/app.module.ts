@@ -9,16 +9,18 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Compaines, CompainesSchema } from './schemas/compaines.schema';
-import { UserController } from './controllers/user.controller';
 import { JwtService } from '@nestjs/jwt';
 import { CompanyService } from './services/company.services';
 import { NextFunction, Request } from 'express';
 import { CompanyController } from './controllers/company.controller';
 import { EventController } from './controllers/event.controller';
-import { TeamController } from './controllers/team.controller';
 import { AuthController } from './controllers/auth.controller';
 import { EventService } from './services/event.services';
 import { Events, EventsSchema } from './schemas/events.schema';
+import { Teams, TeamsSchema } from './schemas/team.schema';
+import { Users, UsersSchema } from './schemas/users.schema';
+import { TeamService } from './services/team.services';
+import { UserService } from './services/user.services';
 
 @Module({
   imports: [
@@ -28,17 +30,24 @@ import { Events, EventsSchema } from './schemas/events.schema';
     MongooseModule.forFeature([
       { name: Compaines.name, schema: CompainesSchema },
       { name: Events.name, schema: EventsSchema },
+      { name: Teams.name, schema: TeamsSchema },
+      { name: Users.name, schema: UsersSchema },
     ]),
   ],
   controllers: [
     AppController,
     AuthController,
     CompanyController,
-    UserController,
     EventController,
-    TeamController,
   ],
-  providers: [AppService, JwtService, CompanyService, EventService],
+  providers: [
+    AppService,
+    JwtService,
+    CompanyService,
+    EventService,
+    TeamService,
+    UserService,
+  ],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {

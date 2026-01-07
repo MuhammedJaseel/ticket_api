@@ -50,6 +50,9 @@ export class Events {
 
   @Prop({ type: Array, default: [] })
   volunteerHallAccess: any[];
+
+  @Prop({ type: Boolean, default: false })
+  deleted: boolean;
 }
 
 export const EventsSchema = SchemaFactory.createForClass(Events);

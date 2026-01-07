@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Events } from 'src/schemas/events.schema';
-import { CreateEventDto } from 'src/types/event.dto';
+import { CreateEventDto, UpdateEventDto } from 'src/types/event.dto';
 
 @Injectable()
 export class EventService {
@@ -25,9 +25,12 @@ export class EventService {
 
   update(
     _companyId: Types.ObjectId,
-    _id: Types.ObjectId,
-    body: CreateEventDto,
+    _eventId: Types.ObjectId,
+    body: Partial<Events>,
   ): Promise<any> {
-    return this.eventModel.findOneAndUpdate({ _id, company: _companyId }, body);
+    return this.eventModel.findOneAndUpdate(
+      { _id: _eventId, company: _companyId },
+      body,
+    );
   }
 }
