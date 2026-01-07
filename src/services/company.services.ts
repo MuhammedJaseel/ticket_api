@@ -23,6 +23,9 @@ export class CompanyService {
   }
 
   register(_id: Types.ObjectId, body: RegisterCompanyDto): Promise<any> {
-    return this.companyModel.findByIdAndUpdate(_id, body);
+    return this.companyModel.findByIdAndUpdate(_id, {
+      registerd: true,
+      ...body,
+    });
   }
 }
