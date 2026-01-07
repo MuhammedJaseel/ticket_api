@@ -20,11 +20,22 @@ export class UserService {
     });
   }
 
-  findAllById(
+  async findAllById(
     _companyId: Types.ObjectId,
     _eventId: Types.ObjectId,
   ): Promise<any> {
-    return this.userModel.find({ company: _companyId, event: _eventId });
+    const total = await this.userModel.countDocuments({
+      company: _companyId,
+      event: _eventId,
+    });
+
+    const data = await this.userModel
+      .find({ company: _companyId, event: _eventId })
+      .sort({ createdAt: -1 })
+      .skip(0)
+      .limit(20);
+
+    return { total, data, page: 1, limit: 20 };
   }
 
   create(

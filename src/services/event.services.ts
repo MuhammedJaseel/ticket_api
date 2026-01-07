@@ -15,8 +15,18 @@ export class EventService {
     return this.eventModel.findOne({ _id: _eventId, company: _companyId });
   }
 
-  findAllById(_companyId: Types.ObjectId): Promise<any> {
-    return this.eventModel.find({ company: _companyId });
+  async findAllById(_companyId: Types.ObjectId): Promise<any> {
+    const total = await this.eventModel.countDocuments({
+      company: _companyId,
+    });
+
+    const data = await this.eventModel
+      .find({ company: _companyId })
+      .sort({ createdAt: -1 })
+      .skip(0)
+      .limit(20);
+
+    return { total, data, page: 1, limit: 20 };
   }
 
   create(_companyId: Types.ObjectId, body: CreateEventDto): Promise<any> {
