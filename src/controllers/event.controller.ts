@@ -17,7 +17,7 @@ import { CreateEventDto, UpdateEventDto } from 'src/types/event.dto';
 import { CreateTeamDto, UpdateTeamDto } from 'src/types/team.dto';
 import { CreateUserDto, UpdateUserDto } from 'src/types/user.dto';
 
-@Controller('api/event')
+@Controller('api/company/event')
 export class EventController {
   constructor(
     private eventService: EventService,
@@ -153,6 +153,7 @@ export class EventController {
   @Get()
   getEvents(@Req() req: Request) {
     const _companyId = new Types.ObjectId(req['reqId']);
+    console.log(_companyId);
     return this.eventService.findAllById(_companyId);
   }
 

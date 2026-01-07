@@ -65,6 +65,7 @@ export class CompanyMiddleware implements NestMiddleware {
     let decoded: any = {};
     try {
       decoded = this.jwt.verify(req.headers.authorization, { secret });
+      console.log(decoded);
       req['reqId'] = decoded.id;
     } catch (error) {
       throw new UnauthorizedException('Anuthorized access, invalid token');
