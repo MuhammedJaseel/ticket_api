@@ -3,7 +3,7 @@ import { Types } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class Events {
-  @Prop({ type: Types.ObjectId, ref: 'Company', required: true })
+  @Prop({ type: Types.ObjectId, ref: 'Compaines', required: true })
   company: Types.ObjectId;
 
   @Prop({ type: String, required: true })

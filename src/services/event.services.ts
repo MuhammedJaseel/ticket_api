@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Events } from 'src/schemas/events.schema';
-import { CreateEventDto, UpdateEventDto } from 'src/types/event.dto';
+import { CreateEventDto } from 'src/types/event.dto';
 
 @Injectable()
 export class EventService {
