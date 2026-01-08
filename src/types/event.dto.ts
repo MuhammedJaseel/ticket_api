@@ -4,11 +4,20 @@ import {
   IsObject,
   IsOptional,
   IsString,
+  Matches,
   MaxLength,
   MinLength,
 } from 'class-validator';
 
 export class CreateEventDto {
+  @IsNotEmpty()
+  @IsString()
+  @MaxLength(20)
+  @Matches(/^[A-Z0-9._]+$/, {
+    message: 'Value can only contain uppercase letters, numbers, "." and "_"',
+  })
+  eventId: string;
+
   @IsNotEmpty()
   @IsString()
   @MaxLength(100)
@@ -78,8 +87,16 @@ export class CreateEventDto {
   volunteerHallAccess: any[];
 }
 
-
 export class UpdateEventDto {
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  @MaxLength(20)
+  @Matches(/^[A-Z0-9._]+$/, {
+    message: 'Value can only contain uppercase letters, numbers, "." and "_"',
+  })
+  eventId: string;
+
   @IsOptional()
   @IsNotEmpty()
   @IsString()

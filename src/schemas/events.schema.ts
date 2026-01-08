@@ -6,6 +6,12 @@ export class Events {
   @Prop({ type: Types.ObjectId, ref: 'Compaines', required: true })
   company: Types.ObjectId;
 
+  @Prop({ type: String, required: true, unique: true })
+  companyEventId: string;
+
+  @Prop({ type: String, required: true })
+  eventId: string;
+
   @Prop({ type: String, required: true })
   name: string;
 

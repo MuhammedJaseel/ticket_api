@@ -30,7 +30,9 @@ export class EventService {
   }
 
   create(_companyId: Types.ObjectId, body: CreateEventDto): Promise<any> {
-    return this.eventModel.create({ company: _companyId, ...body });
+    const company = _companyId;
+    const companyEventId = `${_companyId}:${body.eventId}`;
+    return this.eventModel.create({ company, companyEventId, ...body });
   }
 
   update(
@@ -38,6 +40,9 @@ export class EventService {
     _eventId: Types.ObjectId,
     body: Partial<Events>,
   ): Promise<any> {
+    if (body.hasOwnProperty('eventId'))
+      body['companyEventId'] = `${_companyId}:${body['eventId']}`;
+
     return this.eventModel.findOneAndUpdate(
       { _id: _eventId, company: _companyId },
       body,
