@@ -6,6 +6,12 @@ export class Teams {
   @Prop({ type: Types.ObjectId, ref: 'Compaines', required: true })
   company: Types.ObjectId;
 
+  @Prop({ type: String, required: true, unique: true })
+  _uniqueId: string;
+
+  @Prop({ type: String, required: true })
+  uniqueId: string;
+
   @Prop({ type: Types.ObjectId, ref: 'Events', required: true })
   event: Types.ObjectId;
 

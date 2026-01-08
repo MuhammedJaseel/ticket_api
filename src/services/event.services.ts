@@ -25,6 +25,7 @@ export class EventService {
   async findAllById(_companyId: Types.ObjectId): Promise<any> {
     const total = await this.eventModel.countDocuments({
       company: _companyId,
+      deleted: { $ne: true },
     });
 
     const data = await this.eventModel

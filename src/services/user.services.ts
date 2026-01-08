@@ -17,6 +17,7 @@ export class UserService {
       _id: _userId,
       company: _companyId,
       event: _eventId,
+      deleted: { $ne: true },
     });
   }
 
@@ -27,10 +28,11 @@ export class UserService {
     const total = await this.userModel.countDocuments({
       company: _companyId,
       event: _eventId,
+      deleted: { $ne: true },
     });
 
     const data = await this.userModel
-      .find({ company: _companyId, event: _eventId })
+      .find({ company: _companyId, event: _eventId, deleted: { $ne: true } })
       .sort({ createdAt: -1 })
       .skip(0)
       .limit(20);
@@ -38,11 +40,19 @@ export class UserService {
     return { total, data, page: 1, limit: 20 };
   }
 
-  create(
+  async create(
     _companyId: Types.ObjectId,
     _eventId: Types.ObjectId,
     body: CreateUserDto,
   ): Promise<any> {
+    const total = await this.userModel.countDocuments({
+      company: _companyId,
+      event: _eventId,
+    });
+
+    body['_uniqueId'] = `${_companyId}:${_eventId}:team${total + 1}`;
+    body['uniqueId'] = `team${total + 1}`;
+
     return this.userModel.create({
       company: _companyId,
       event: _eventId,

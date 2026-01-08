@@ -17,6 +17,7 @@ export class TeamService {
       _id: _teamId,
       event: _eventId,
       company: _companyId,
+      deleted: { $ne: true },
     });
   }
 
@@ -27,10 +28,11 @@ export class TeamService {
     const total = await this.teamModel.countDocuments({
       company: _companyId,
       event: _eventId,
+      deleted: { $ne: true },
     });
 
     const data = await this.teamModel
-      .find({ company: _companyId, event: _eventId })
+      .find({ company: _companyId, event: _eventId, deleted: { $ne: true } })
       .sort({ createdAt: -1 })
       .skip(0)
       .limit(20);
@@ -38,11 +40,19 @@ export class TeamService {
     return { total, data, page: 1, limit: 20 };
   }
 
-  create(
+  async create(
     _companyId: Types.ObjectId,
     _eventId: Types.ObjectId,
     body: CreateTeamDto,
   ): Promise<any> {
+    const total = await this.teamModel.countDocuments({
+      company: _companyId,
+      event: _eventId,
+    });
+
+    body['_uniqueId'] = `${_companyId}:${_eventId}:team${total + 1}`;
+    body['uniqueId'] = `team${total + 1}`;
+
     return this.teamModel.create({
       company: _companyId,
       event: _eventId,
