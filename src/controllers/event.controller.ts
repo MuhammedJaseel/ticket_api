@@ -143,6 +143,11 @@ export class EventController {
 
   // ----------------------------------------------------------------------------
 
+  @Get('check-event-id/:eventId')
+  checkEventId(@Req() req: Request, @Param('eventId') eventId: string) {
+    return this.eventService.checkEventId(req['reqId'], eventId);
+  }
+
   @Get(':eventId')
   getEvent(@Req() req: Request, @Param('eventId') eventId: string) {
     const _companyId = new Types.ObjectId(req['reqId']);
@@ -153,7 +158,6 @@ export class EventController {
   @Get()
   getEvents(@Req() req: Request) {
     const _companyId = new Types.ObjectId(req['reqId']);
-    console.log(_companyId);
     return this.eventService.findAllById(_companyId);
   }
 
