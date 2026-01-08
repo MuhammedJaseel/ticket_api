@@ -15,9 +15,9 @@ export class EventService {
     return this.eventModel.findOne({ _id: _eventId, company: _companyId });
   }
 
-  async checkEventId(companyId: string, eventId: string): Promise<any> {
-    const companyEventId = `${companyId}:${eventId}`;
-    const event = await this.eventModel.findOne({ companyEventId });
+  async checkUniqueName(companyId: string, uniqueName: string): Promise<any> {
+    const _uniqueName = `${companyId}:${uniqueName}`;
+    const event = await this.eventModel.findOne({ _uniqueName });
     if (event) return { used: true };
     return { used: false };
   }
@@ -38,8 +38,8 @@ export class EventService {
 
   create(_companyId: Types.ObjectId, body: CreateEventDto): Promise<any> {
     const company = _companyId;
-    const companyEventId = `${_companyId}:${body.eventId}`;
-    return this.eventModel.create({ company, companyEventId, ...body });
+    const _uniqueName = `${_companyId}:${body.uniqueName}`;
+    return this.eventModel.create({ company, _uniqueName, ...body });
   }
 
   update(
@@ -47,8 +47,8 @@ export class EventService {
     _eventId: Types.ObjectId,
     body: Partial<Events>,
   ): Promise<any> {
-    if (body.hasOwnProperty('eventId'))
-      body['companyEventId'] = `${_companyId}:${body['eventId']}`;
+    if (body.hasOwnProperty('uniqueName'))
+      body['_uniqueName'] = `${_companyId}:${body['eventId']}`;
 
     return this.eventModel.findOneAndUpdate(
       { _id: _eventId, company: _companyId },

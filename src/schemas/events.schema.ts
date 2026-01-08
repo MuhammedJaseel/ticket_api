@@ -7,10 +7,10 @@ export class Events {
   company: Types.ObjectId;
 
   @Prop({ type: String, required: true, unique: true })
-  companyEventId: string;
+  _uniqueName: string;
 
   @Prop({ type: String, required: true })
-  eventId: string;
+  uniqueName: string;
 
   @Prop({ type: String, required: true })
   name: string;

@@ -16,7 +16,7 @@ export class CreateEventDto {
   @Matches(/^[A-Z0-9._]+$/, {
     message: 'Value can only contain uppercase letters, numbers, "." and "_"',
   })
-  eventId: string;
+  uniqueName: string;
 
   @IsNotEmpty()
   @IsString()
@@ -95,7 +95,7 @@ export class UpdateEventDto {
   @Matches(/^[A-Z0-9._]+$/, {
     message: 'Value can only contain uppercase letters, numbers, "." and "_"',
   })
-  eventId: string;
+  uniqueName: string;
 
   @IsOptional()
   @IsNotEmpty()

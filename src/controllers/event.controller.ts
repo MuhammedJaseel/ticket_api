@@ -143,9 +143,12 @@ export class EventController {
 
   // ----------------------------------------------------------------------------
 
-  @Get('check-event-id/:eventId')
-  checkEventId(@Req() req: Request, @Param('eventId') eventId: string) {
-    return this.eventService.checkEventId(req['reqId'], eventId);
+  @Get('check-event-id/:uniqueName')
+  checkUniqueName(
+    @Req() req: Request,
+    @Param('uniqueName') uniqueName: string,
+  ) {
+    return this.eventService.checkUniqueName(req['reqId'], uniqueName);
   }
 
   @Get(':eventId')
