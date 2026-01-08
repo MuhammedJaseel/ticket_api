@@ -15,9 +15,11 @@ export class EventService {
     return this.eventModel.findOne({ _id: _eventId, company: _companyId });
   }
 
-  checkEventId(companyId: string, eventId: string): Promise<any> {
+  async checkEventId(companyId: string, eventId: string): Promise<any> {
     const companyEventId = `${companyId}:${eventId}`;
-    return this.eventModel.findOne({ companyEventId });
+    const event = await this.eventModel.findOne({ companyEventId });
+    if (event) return { used: true };
+    return { used: false };
   }
 
   async findAllById(_companyId: Types.ObjectId): Promise<any> {
