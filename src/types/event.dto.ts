@@ -56,7 +56,7 @@ export class CreateEventDto {
 
   @IsOptional()
   @IsArray()
-  ticketTypes: any[];
+  ticketTypes: any;
 
   @IsOptional()
   @IsObject()
@@ -68,7 +68,7 @@ export class CreateEventDto {
 
   @IsOptional()
   @IsArray()
-  hallAccess: any[];
+  hallAccess: any;
 
   @IsOptional()
   @IsArray()
@@ -76,7 +76,7 @@ export class CreateEventDto {
 
   @IsOptional()
   @IsArray()
-  shiftTemplates: any[];
+  shiftTemplates: any;
 
   @IsOptional()
   @IsObject()
@@ -84,7 +84,7 @@ export class CreateEventDto {
 
   @IsOptional()
   @IsArray()
-  volunteerHallAccess: any[];
+  volunteerHallAccess: any;
 }
 
 export class UpdateEventDto {
@@ -136,7 +136,7 @@ export class UpdateEventDto {
 
   @IsOptional()
   @IsArray()
-  ticketTypes: any[];
+  ticketTypes: any;
 
   @IsOptional()
   @IsObject()
@@ -148,7 +148,7 @@ export class UpdateEventDto {
 
   @IsOptional()
   @IsArray()
-  hallAccess: any[];
+  hallAccess: any;
 
   @IsOptional()
   @IsArray()
@@ -156,7 +156,7 @@ export class UpdateEventDto {
 
   @IsOptional()
   @IsArray()
-  shiftTemplates: any[];
+  shiftTemplates: any;
 
   @IsOptional()
   @IsObject()
@@ -164,5 +164,5 @@ export class UpdateEventDto {
 
   @IsOptional()
   @IsArray()
-  volunteerHallAccess: any[];
+  volunteerHallAccess: any;
 }

@@ -43,7 +43,7 @@ export class EventService {
     return this.eventModel.create({ company, _uniqueName, ...body });
   }
 
-  update(
+  async update(
     _companyId: Types.ObjectId,
     _eventId: Types.ObjectId,
     body: Partial<Events>,
@@ -51,9 +51,11 @@ export class EventService {
     if (body.hasOwnProperty('uniqueName'))
       body['_uniqueName'] = `${_companyId}:${body['eventId']}`;
 
-    return this.eventModel.findOneAndUpdate(
+    const result = await this.eventModel.findOneAndUpdate(
       { _id: _eventId, company: _companyId },
-      body,
+      { $set: body },
     );
+
+    return {};
   }
 }
