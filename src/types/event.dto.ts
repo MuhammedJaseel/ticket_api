@@ -85,6 +85,10 @@ export class CreateEventDto {
   @IsOptional()
   @IsArray()
   volunteerHallAccess: any;
+
+  @IsOptional()
+  @IsArray()
+  qrTicketColors: any;
 }
 
 export class UpdateEventDto {
@@ -165,4 +169,8 @@ export class UpdateEventDto {
   @IsOptional()
   @IsArray()
   volunteerHallAccess: any;
+
+  @IsOptional()
+  @IsArray()
+  qrTicketColors: any;
 }

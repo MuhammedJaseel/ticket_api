@@ -57,6 +57,9 @@ export class Events {
   @Prop({ type: Array, default: [] })
   volunteerHallAccess: any[];
 
+  @Prop({ type: Array, default: [] })
+  qrTicketColors: any[];
+
   @Prop({ type: Boolean, default: false })
   deleted: boolean;
 }
