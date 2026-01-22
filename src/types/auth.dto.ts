@@ -32,6 +32,18 @@ export class VerifyCompanyDto {
   @IsString()
   token: string;
 
+  @MinLength(6, { message: 'OTP must be 6 characters' })
+  @MaxLength(6, { message: 'OTP must be 6 characters' })
+  @IsNotEmpty({ message: 'OTP is required' })
+  @IsString()
+  otp: string;
+}
+
+export class VerifyTeamDto {
+  @IsNotEmpty({ message: 'Token is required' })
+  @IsString()
+  token: string;
+
   @MinLength(4, { message: 'OTP must be 4 characters' })
   @MaxLength(4, { message: 'OTP must be 4 characters' })
   @IsNotEmpty({ message: 'OTP is required' })

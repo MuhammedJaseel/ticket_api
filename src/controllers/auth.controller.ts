@@ -7,6 +7,7 @@ import {
   LoginCompanyDto,
   LoginTeamDto,
   VerifyCompanyDto,
+  VerifyTeamDto,
 } from 'src/types/auth.dto';
 
 @Controller('api/auth')
@@ -61,7 +62,7 @@ export class AuthController {
   }
 
   @Post('team/verify')
-  async teamVerify(@Body() body: VerifyCompanyDto) {
+  async teamVerify(@Body() body: VerifyTeamDto) {
     const secret = 'companysecret' + body.otp;
     let decoded: any = {};
     try {
