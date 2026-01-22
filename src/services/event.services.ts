@@ -23,13 +23,11 @@ export class EventService {
   }
 
   async findAllById(_companyId: Types.ObjectId): Promise<any> {
-    const total = await this.eventModel.countDocuments({
-      company: _companyId,
-      deleted: { $ne: true },
-    });
+    const query = { company: _companyId, deleted: { $ne: true } };
+    const total = await this.eventModel.countDocuments(query);
 
     const data = await this.eventModel
-      .find({ company: _companyId })
+      .find(query)
       .sort({ createdAt: -1 })
       .skip(0)
       .limit(20);
