@@ -23,7 +23,7 @@ export class TeamService {
   findByIdForDetails(id: string): Promise<any> {
     return this.teamModel
       .findById(id)
-      .select('uniqueId name email phone role')
+      .select('uniqueId name email phone role shift')
       .populate('event', 'hallAccess')
       .lean();
   }
