@@ -20,8 +20,12 @@ export class TeamService {
       .select('createdAt');
   }
 
-  findById(id: string): Promise<any> {
-    return this.teamModel.findById(id).select('uniqueId name email phone');
+  findByIdForDetails(id: string): Promise<any> {
+    return this.teamModel
+      .findById(id)
+      .select('uniqueId name email phone role')
+      .populate('event', 'hallAccess')
+      .lean();
   }
 
   findOne(

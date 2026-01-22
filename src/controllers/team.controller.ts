@@ -10,6 +10,7 @@ export class TeamController {
   @Get('profile')
   async getCompany(@Req() req: Request) {
     const loginAt = await this.teamService.findTeamLastLogin(req['reqId']);
-    return { ...(await this.teamService.findById(req['reqId'])), loginAt };
+    const team = await this.teamService.findByIdForDetails(req['reqId']);
+    return { ...team, loginAt };
   }
 }
