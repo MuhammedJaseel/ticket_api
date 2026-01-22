@@ -8,7 +8,11 @@ import { CreateTeamDto } from 'src/types/team.dto';
 export class TeamService {
   constructor(@InjectModel(Teams.name) private teamModel: Model<Teams>) {}
 
-  findOneById(
+  findById(id: string): Promise<any> {
+    return this.teamModel.findById(id).select('uniqueId name email phone');
+  }
+
+  findOne(
     _companyId: Types.ObjectId,
     _eventId: Types.ObjectId,
     _teamId: Types.ObjectId,

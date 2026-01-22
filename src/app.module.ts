@@ -26,6 +26,7 @@ import {
 import { Users, UsersSchema } from './schemas/users.schema';
 import { TeamService } from './services/team.services';
 import { UserService } from './services/user.services';
+import { TeamController } from './controllers/team.controller';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { UserService } from './services/user.services';
     AuthController,
     CompanyController,
     EventController,
+    TeamController,
   ],
   providers: [
     AppService,
@@ -59,6 +61,7 @@ export class AppModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(CompanyMiddleware).forRoutes('/api/company*');
     consumer.apply(UsersMiddleware).forRoutes('/api/users*');
+    consumer.apply(TeamMiddleware).forRoutes('/api/team*');
   }
 }
 
@@ -82,6 +85,23 @@ export class CompanyMiddleware implements NestMiddleware {
 
 @Injectable()
 export class UsersMiddleware implements NestMiddleware {
+  constructor(private jwt: JwtService) {}
+
+  use(req: Request, res: Response, next: NextFunction) {
+    const secret = 'companysecret';
+    let decoded: any = {};
+    try {
+      decoded = this.jwt.verify(req.headers.authorization, { secret });
+      req['reqId'] = decoded.id;
+    } catch (error) {
+      throw new UnauthorizedException('Anuthorized access, invalid token');
+    }
+    next();
+  }
+}
+
+@Injectable()
+export class TeamMiddleware implements NestMiddleware {
   constructor(private jwt: JwtService) {}
 
   use(req: Request, res: Response, next: NextFunction) {

@@ -34,7 +34,7 @@ export class EventController {
     const _companyId = new Types.ObjectId(req['reqId']);
     const _eventId = new Types.ObjectId(eventId);
     const _teamId = new Types.ObjectId(teamId);
-    return this.teamService.findOneById(_companyId, _eventId, _teamId);
+    return this.teamService.findOne(_companyId, _eventId, _teamId);
   }
 
   @Get(':eventId/team')
