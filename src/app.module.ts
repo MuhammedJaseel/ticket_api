@@ -17,7 +17,12 @@ import { EventController } from './controllers/event.controller';
 import { AuthController } from './controllers/auth.controller';
 import { EventService } from './services/event.services';
 import { Events, EventsSchema } from './schemas/events.schema';
-import { Teams, TeamsSchema } from './schemas/team.schema';
+import {
+  TeamActivity,
+  TeamActivitySchema,
+  Teams,
+  TeamsSchema,
+} from './schemas/team.schema';
 import { Users, UsersSchema } from './schemas/users.schema';
 import { TeamService } from './services/team.services';
 import { UserService } from './services/user.services';
@@ -32,6 +37,7 @@ import { UserService } from './services/user.services';
       { name: Events.name, schema: EventsSchema },
       { name: Teams.name, schema: TeamsSchema },
       { name: Users.name, schema: UsersSchema },
+      { name: TeamActivity.name, schema: TeamActivitySchema },
     ]),
   ],
   controllers: [

@@ -71,12 +71,7 @@ export class AuthController {
     }
 
     if (decoded.teamId) {
-      const token = this.jwt.sign(
-        { id: decoded.teamId, type: 'TEAM_T1' },
-        { secret: 'companysecret' },
-      );
-      // TODO: Need to add expiry time
-      return { token };
+      return this.companyService.markTeamLogin(decoded.teamId);
     } else {
       const events = await this.companyService.findTeamAllEvents(decoded.email);
       const secret = 'companysecret';
@@ -99,12 +94,6 @@ export class AuthController {
     const event = new Types.ObjectId(body.eventId);
     const email = decoded.email;
     const team = await this.companyService.getTeam({ event, email });
-
-    const token = this.jwt.sign(
-      { id: team._id, type: 'TEAM_T1' },
-      { secret: 'companysecret' },
-    );
-    // TODO: Need to add expiry time
-    return { token };
+    return this.companyService.markTeamLogin(team._id);
   }
 }

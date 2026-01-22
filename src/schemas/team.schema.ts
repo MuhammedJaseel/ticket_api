@@ -8,7 +8,7 @@ export class Teams {
 
   @Prop({ type: Types.ObjectId, ref: 'Events', required: true })
   event: Types.ObjectId;
-  
+
   @Prop({ type: String, required: true, unique: true })
   _uniqueId: string;
 
@@ -47,6 +47,17 @@ export class Teams {
 }
 
 export const TeamsSchema = SchemaFactory.createForClass(Teams);
+
+@Schema({ timestamps: true })
+export class TeamActivity {
+  @Prop({ type: Types.ObjectId, ref: 'Teams', required: true })
+  team: Types.ObjectId;
+
+  @Prop({ type: String, enum: ['IN', 'OUT'], required: true })
+  activity: 'IN' | 'OUT';
+}
+
+export const TeamActivitySchema = SchemaFactory.createForClass(TeamActivity);
 
 // {
 //     "eventId": "695c19200d9ac2fb55488f37",

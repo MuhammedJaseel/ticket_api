@@ -1,17 +1,21 @@
 import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Compaines } from 'src/schemas/compaines.schema';
 import { Events } from 'src/schemas/events.schema';
-import { Teams } from 'src/schemas/team.schema';
+import { TeamActivity, Teams } from 'src/schemas/team.schema';
 import { RegisterCompanyDto } from 'src/types/company.dto';
 
 @Injectable()
 export class CompanyService {
   constructor(
+    private jwt: JwtService,
     @InjectModel(Compaines.name) private companyModel: Model<Compaines>,
     @InjectModel(Events.name) private eventModel: Model<Events>,
     @InjectModel(Teams.name) private teamModel: Model<Teams>,
+    @InjectModel(TeamActivity.name)
+    private teamActivityModel: Model<TeamActivity>,
   ) {}
 
   findByEmail(email: string): Promise<any> {
@@ -46,5 +50,16 @@ export class CompanyService {
 
   getTeam(query: any) {
     return this.teamModel.findOne(query);
+  }
+
+  async markTeamLogin(id: string | Types.ObjectId) {
+    const token = this.jwt.sign(
+      { id, type: 'TEAM_T1' },
+      { secret: 'companysecret' },
+    );
+    // TODO: Need to add expiry time
+    const team = new Types.ObjectId(id);
+    await this.teamActivityModel.create({ team, activity: 'IN' });
+    return { token };
   }
 }
