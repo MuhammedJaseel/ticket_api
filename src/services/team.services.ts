@@ -1,12 +1,24 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { Teams } from 'src/schemas/team.schema';
+import { TeamActivity, Teams } from 'src/schemas/team.schema';
 import { CreateTeamDto } from 'src/types/team.dto';
 
 @Injectable()
 export class TeamService {
-  constructor(@InjectModel(Teams.name) private teamModel: Model<Teams>) {}
+  constructor(
+    @InjectModel(Teams.name) private teamModel: Model<Teams>,
+    @InjectModel(TeamActivity.name)
+    private teamActivityModel: Model<TeamActivity>,
+  ) {}
+
+  findTeamLastLogin(_team: string) {
+    const team = new Types.ObjectId(_team);
+    return this.teamActivityModel
+      .findOne({ team })
+      .sort({ createdAt: -1 })
+      .select('createdAt');
+  }
 
   findById(id: string): Promise<any> {
     return this.teamModel.findById(id).select('uniqueId name email phone');

@@ -8,7 +8,8 @@ export class TeamController {
   constructor(private teamService: TeamService) {}
 
   @Get('profile')
-  getCompany(@Req() req: Request) {
-    return this.teamService.findById(req['reqId']);
+  async getCompany(@Req() req: Request) {
+    const loginAt = await this.teamService.findTeamLastLogin(req['reqId']);
+    return { ...(await this.teamService.findById(req['reqId'])), loginAt };
   }
 }
