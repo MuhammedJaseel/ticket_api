@@ -2,12 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Compaines } from 'src/schemas/compaines.schema';
+import { Events } from 'src/schemas/events.schema';
+import { Teams } from 'src/schemas/team.schema';
 import { RegisterCompanyDto } from 'src/types/company.dto';
 
 @Injectable()
 export class CompanyService {
   constructor(
     @InjectModel(Compaines.name) private companyModel: Model<Compaines>,
+    @InjectModel(Events.name) private eventModel: Model<Events>,
+    @InjectModel(Teams.name) private teamModel: Model<Teams>,
   ) {}
 
   findByEmail(email: string): Promise<any> {
@@ -27,5 +31,20 @@ export class CompanyService {
       registerd: true,
       ...body,
     });
+  }
+
+  async findTeamAllEvents(email: string) {
+    const teams = await this.teamModel.find({ email });
+
+    const eventIds = teams.map((it) => it.event);
+
+    return await this.eventModel
+      .find({ _id: { $in: eventIds } })
+      .populate('company', 'name')
+      .select('name');
+  }
+
+  getTeam(query: any) {
+    return this.teamModel.findOne(query);
   }
 }
