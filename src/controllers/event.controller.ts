@@ -174,13 +174,10 @@ export class EventController {
   updateEvent(
     @Req() req: Request,
     @Param('eventId') eventId: string,
-    // @Body() body: UpdateEventDto,
-    @Body() body: any,
+    @Body() body: UpdateEventDto,
   ) {
     const _companyId = new Types.ObjectId(req['reqId']);
     const _eventId = new Types.ObjectId(eventId);
-    console.log(body);
-    return {};
     return this.eventService.update(_companyId, _eventId, body);
   }
 
