@@ -24,7 +24,7 @@ export class TeamService {
     return this.teamModel
       .findById(id)
       .select('uniqueId name email phone role shift')
-      .populate('event', 'hallAccess')
+      .populate('event', 'hallAccess badgeProfile')
       .lean();
   }
 
