@@ -34,12 +34,12 @@ export class CreateUserDto {
   @MaxLength(100)
   city: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   @MaxLength(100)
   org: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   @MaxLength(100)
   role: string;
@@ -49,12 +49,12 @@ export class CreateUserDto {
   @MaxLength(100)
   ticketType: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   @MaxLength(100)
   dietary: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   @MaxLength(100)
   accessibility: string;
@@ -77,7 +77,7 @@ export class CreateUserDto {
   @IsBoolean()
   consent: boolean;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   @MaxLength(500)
   notes: string;
@@ -171,7 +171,6 @@ export class UpdateUserDto {
   consent: boolean;
 
   @IsOptional()
-  @IsNotEmpty()
   @IsString()
   @MaxLength(500)
   notes: string;
