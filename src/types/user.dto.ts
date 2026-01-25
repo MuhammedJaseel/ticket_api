@@ -113,19 +113,16 @@ export class UpdateUserDto {
   country: string;
 
   @IsOptional()
-  @IsNotEmpty()
   @IsString()
   @MaxLength(100)
   city: string;
 
   @IsOptional()
-  @IsNotEmpty()
   @IsString()
   @MaxLength(100)
   org: string;
 
   @IsOptional()
-  @IsNotEmpty()
   @IsString()
   @MaxLength(100)
   role: string;
@@ -137,13 +134,11 @@ export class UpdateUserDto {
   ticketType: string;
 
   @IsOptional()
-  @IsNotEmpty()
   @IsString()
   @MaxLength(100)
   dietary: string;
 
   @IsOptional()
-  @IsNotEmpty()
   @IsString()
   @MaxLength(100)
   accessibility: string;
