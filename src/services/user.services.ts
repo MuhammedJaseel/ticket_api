@@ -50,8 +50,8 @@ export class UserService {
       event: _eventId,
     });
 
-    body['_uniqueId'] = `${_companyId}:${_eventId}:team${total + 1}`;
-    body['uniqueId'] = `team${total + 1}`;
+    body['_uniqueId'] = `${_companyId}:${_eventId}:${total + 1}`;
+    body['uniqueId'] = `${total + 1}`;
 
     return this.userModel.create({
       company: _companyId,
