@@ -176,7 +176,6 @@ export class UpdateUserDto {
   notes: string;
 
   @IsOptional()
-  @IsNotEmpty()
   @IsObject()
   custom: any;
 }
